@@ -16,7 +16,7 @@ provider "github" {
 module "project_alpha" {
   source      = "./modules/github_repository"
   repo_name   = "project-alpha-api"
-  visibility  = "private"
+  visibility  = "public"
   description = "Core backend API for Project Alpha"
 }
 
