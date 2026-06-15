@@ -1,3 +1,5 @@
+# modules/github_repository/variables.tf
+
 variable "repo_name" {
   type        = string
   description = "The name of the GitHub repository"
@@ -15,15 +17,20 @@ variable "visibility" {
   default     = "private"
 }
 
-# The new variable that accepts the entire preset configuration package
+# Expand the allowed attributes inside your object structure
 variable "presets" {
   type = object({
-    has_issues         = bool
-    has_projects       = bool
-    has_wiki           = bool
-    allow_squash_merge = bool
-    allow_merge_commit = bool
-    required_reviewers = number
+    has_issues                 = bool
+    has_projects               = bool
+    has_wiki                   = bool
+    has_downloads              = bool
+    allow_squash_merge         = bool
+    allow_merge_commit         = bool
+    allow_rebase_merge         = bool
+    delete_branch_on_merge     = bool
+    required_reviewers         = number
+    dismiss_stale_reviews      = bool
+    require_code_owner_reviews = bool
   })
-  description = "A configuration package containing all repository feature presets"
+  description = "Comprehensive configuration package containing all repository feature presets"
 }

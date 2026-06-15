@@ -14,15 +14,19 @@ resource "github_repository" "repo" {
   description = var.description
   visibility  = var.visibility
 
-  # Reading configurations straight from the preset variable package
-  has_issues         = var.presets.has_issues
-  has_projects       = var.presets.has_projects
-  has_wiki           = var.presets.has_wiki
-  allow_squash_merge = var.presets.allow_squash_merge
-  allow_merge_commit = var.presets.allow_merge_commit
+  # Core Features
+  has_issues    = var.presets.has_issues
+  has_projects  = var.presets.has_projects
+  has_wiki      = var.presets.has_wiki
+  has_downloads = var.presets.has_downloads
 
-  auto_init          = true
-  allow_rebase_merge = false
+  # Merge Strategies
+  allow_squash_merge     = var.presets.allow_squash_merge
+  allow_merge_commit     = var.presets.allow_merge_commit
+  allow_rebase_merge     = var.presets.allow_rebase_merge
+  delete_branch_on_merge = var.presets.delete_branch_on_merge
+
+  auto_init = true
 }
 
 resource "github_branch_protection" "main" {
@@ -35,8 +39,8 @@ resource "github_branch_protection" "main" {
   allows_deletions = false
 
   required_pull_request_reviews {
-    dismiss_stale_reviews = true
-    # Dynamically reading the reviewer count requirement
+    dismiss_stale_reviews           = var.presets.dismiss_stale_reviews
     required_approving_review_count = var.presets.required_reviewers
+    require_code_owner_reviews      = var.presets.require_code_owner_reviews
   }
 }
