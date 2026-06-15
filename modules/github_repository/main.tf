@@ -28,7 +28,7 @@ resource "github_branch_protection" "main" {
 
   enforce_admins   = true
   allows_deletions = false
-  
+
   required_pull_request_reviews {
     dismiss_stale_reviews_req       = true
     required_approving_review_count = 1

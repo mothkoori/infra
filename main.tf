@@ -21,7 +21,7 @@ module "project_alpha" {
 }
 
 module "project_beta" {
-  source    = "./modules/github_repository"
-  repo_name = "project-beta-ui"
+  source     = "./modules/github_repository"
+  repo_name  = "project-beta-ui"
   visibility = "public"
 }
