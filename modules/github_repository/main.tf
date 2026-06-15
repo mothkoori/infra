@@ -1,3 +1,5 @@
+# modules/github_repository/main.tf
+
 terraform {
   required_providers {
     github = {
@@ -12,17 +14,20 @@ resource "github_repository" "repo" {
   description = var.description
   visibility  = var.visibility
 
-  # Presets / Standardized Templates
-  has_issues         = true
-  has_wiki           = false
-  has_projects       = false
+  # Reading configurations straight from the preset variable package
+  has_issues         = var.presets.has_issues
+  has_projects       = var.presets.has_projects
+  has_wiki           = var.presets.has_wiki
+  allow_squash_merge = var.presets.allow_squash_merge
+  allow_merge_commit = var.presets.allow_merge_commit
+
   auto_init          = true
-  allow_merge_commit = false
-  allow_squash_merge = true
   allow_rebase_merge = false
 }
 
 resource "github_branch_protection" "main" {
+  count = var.visibility == "public" ? 1 : 0
+
   repository_id = github_repository.repo.node_id
   pattern       = "main"
 
@@ -30,7 +35,8 @@ resource "github_branch_protection" "main" {
   allows_deletions = false
 
   required_pull_request_reviews {
-    dismiss_stale_reviews       = true
-    required_approving_review_count = 1
+    dismiss_stale_reviews = true
+    # Dynamically reading the reviewer count requirement
+    required_approving_review_count = var.presets.required_reviewers
   }
 }
