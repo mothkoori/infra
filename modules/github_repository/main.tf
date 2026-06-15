@@ -30,7 +30,7 @@ resource "github_branch_protection" "main" {
   allows_deletions = false
 
   required_pull_request_reviews {
-    dismiss_stale_reviews_req       = true
+    dismiss_stale_reviews       = true
     required_approving_review_count = 1
   }
 }
