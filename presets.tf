@@ -15,8 +15,8 @@ locals {
       delete_branch_on_merge = true
 
       # Ruleset Configuration Values
-      required_reviewers         = 2    # 2 Approvals required
-      dismiss_stale_reviews      = true # New pushes invalidate old approvals
+      required_reviewers        = 2    # 2 Approvals required
+      dismiss_stale_review     = true # New pushes invalidate old approvals
       require_code_owner_review = true # Enforce code owners compliance
 
       release_branch_pattern = "release/*"       # Targets main AND release/* branches
