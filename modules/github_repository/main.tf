@@ -47,7 +47,7 @@ resource "github_repository_ruleset" "branch_protection" {
     # REQUIREMENT: No direct commits allowed (forces Pull Requests)
     pull_request {
       required_approving_review_count = var.presets.required_reviewers
-      require_code_owner_reviews      = var.presets.require_code_owner_reviews
+      require_code_owner_review       = var.presets.require_code_owner_review
 
       # REQUIREMENT: If an update happens to a PR, the approval is invalidated
       dismiss_stale_reviews_on_push = var.presets.dismiss_stale_reviews
@@ -61,29 +61,3 @@ resource "github_repository_ruleset" "branch_protection" {
   }
 }
 
-# 3. Repository Lifecycle Ruleset (Handles Admin/Group protections)
-resource "github_repository_ruleset" "repo_lifecycle" {
-  name        = "repo-lifecycle-policy"
-  repository  = github_repository.repo.name
-  target      = "repository"
-  enforcement = "active"
-
-  # REQUIREMENT: Only specific admin groups can delete the repository itself
-  # We use bypass actors. If you are in the bypass list, you can delete it. Everyone else is blocked.
-  dynamic "bypass_actors" {
-    for_each = var.presets.bypass_actors_teams
-    content {
-      actor_id    = 1 # Note: In production organization environments, you map the GitHub Team ID here
-      actor_type  = "Team"
-      bypass_mode = "always"
-    }
-  }
-
-  rules {
-    creation = false
-    update   = false
-
-    # Restricts deletion of the repository to everyone except the bypass actors list
-    deletion = true
-  }
-}
