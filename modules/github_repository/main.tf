@@ -47,12 +47,13 @@ resource "github_repository_ruleset" "branch_protection" {
     # REQUIREMENT: No direct commits allowed (forces Pull Requests)
     pull_request {
       required_approving_review_count = var.presets.required_reviewers
-      require_code_owner_review       = var.presets.require_code_owner_review
 
-      # REQUIREMENT: If an update happens to a PR, the approval is invalidated
+      # The ruleset field is singular, but it reads from your plural variable attribute
+      require_code_owner_review = var.presets.require_code_owner_reviews
+
+      # The ruleset field is 'on_push', but it reads from your variable attribute
       dismiss_stale_reviews_on_push = var.presets.dismiss_stale_reviews
 
-      # REQUIREMENT: The person who committed the code cannot review/approve their own PR
       require_last_push_approval = true
     }
 

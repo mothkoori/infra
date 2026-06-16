@@ -17,6 +17,8 @@ variable "visibility" {
   default     = "private"
 }
 
+# modules/github_repository/variables.tf
+
 variable "presets" {
   type = object({
     has_issues                 = bool
@@ -28,12 +30,9 @@ variable "presets" {
     allow_rebase_merge         = bool
     delete_branch_on_merge     = bool
     required_reviewers         = number
-    dismiss_stale_reviews      = bool
-    require_code_owner_reviews = bool
-
-    # New parameters for advanced rulesets
-    bypass_actors_teams    = list(string) # Teams that can bypass rules (e.g., delete repos/branches)
-    release_branch_pattern = string       # Pattern for release branches (e.g., "release/*")
+    dismiss_stale_reviews      = bool # Ensure this spelling
+    require_code_owner_reviews = bool # Ensure this spelling
+    release_branch_pattern     = string
+    bypass_actors_teams        = list(string)
   })
-  description = "Comprehensive configuration package containing all repository feature presets"
 }

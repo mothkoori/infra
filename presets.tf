@@ -1,9 +1,9 @@
 # presets.tf (In the root directory)
 
+# presets.tf (In the root directory)
+
 locals {
   repo_presets = {
-
-    # Production Microservice Configuration Package
     microservice = {
       has_issues             = true
       has_projects           = false
@@ -13,14 +13,14 @@ locals {
       allow_merge_commit     = false
       allow_rebase_merge     = false
       delete_branch_on_merge = true
+      required_reviewers     = 2
 
-      # Ruleset Configuration Values
-      required_reviewers        = 2    # 2 Approvals required
-      dismiss_stale_review      = true # New pushes invalidate old approvals
-      require_code_owner_review = true # Enforce code owners compliance
+      # FIX: Ensure these two lines are present and spelled exactly like this:
+      dismiss_stale_reviews      = true
+      require_code_owner_reviews = true
 
-      release_branch_pattern = "release/*"       # Targets main AND release/* branches
-      bypass_actors_teams    = ["devops-admins"] # Only members of this team bypass deletion blocks
+      release_branch_pattern = "release/*"
+      bypass_actors_teams    = ["devops-admins"]
     }
   }
 }
