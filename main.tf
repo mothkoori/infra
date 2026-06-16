@@ -24,20 +24,3 @@ module "order_api" {
   presets = local.repo_presets["microservice"]
 }
 
-module "marketing_site" {
-  source     = "./modules/github_repository"
-  repo_name  = "marketing-landing-page"
-  visibility = "public"
-
-  # Pass the frontend preset group map package
-  presets = local.repo_presets["frontend"]
-}
-
-module "user_guide" {
-  source     = "./modules/github_repository"
-  repo_name  = "developer-docs"
-  visibility = "public"
-
-  # Easily assign the new documentation configuration group
-  presets = local.repo_presets["documentation"]
-}
