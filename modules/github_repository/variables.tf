@@ -17,7 +17,6 @@ variable "visibility" {
   default     = "private"
 }
 
-# Expand the allowed attributes inside your object structure
 variable "presets" {
   type = object({
     has_issues                 = bool
@@ -31,6 +30,10 @@ variable "presets" {
     required_reviewers         = number
     dismiss_stale_reviews      = bool
     require_code_owner_reviews = bool
+
+    # New parameters for advanced rulesets
+    bypass_actors_teams    = list(string) # Teams that can bypass rules (e.g., delete repos/branches)
+    release_branch_pattern = string       # Pattern for release branches (e.g., "release/*")
   })
   description = "Comprehensive configuration package containing all repository feature presets"
 }

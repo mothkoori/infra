@@ -3,22 +3,24 @@
 locals {
   repo_presets = {
 
-    # Fully expanded Group Option: Best for core APIs and backend apps
+    # Production Microservice Configuration Package
     microservice = {
-      has_issues                 = true
-      has_projects               = false
-      has_wiki                   = false
-      has_downloads              = false
-      allow_squash_merge         = true  # Enforce squash for clean main histories
-      allow_merge_commit         = false # Disable standard merge commits
-      allow_rebase_merge         = false
-      delete_branch_on_merge     = true # Auto cleanup merged branches
-      required_reviewers         = 2    # Requires two pair of eyes
-      dismiss_stale_reviews      = true # Require fresh review if new code is pushed
-      require_code_owner_reviews = true # Code owners must weigh in
-    }
+      has_issues             = true
+      has_projects           = false
+      has_wiki               = false
+      has_downloads          = false
+      allow_squash_merge     = true
+      allow_merge_commit     = false
+      allow_rebase_merge     = false
+      delete_branch_on_merge = true
 
-    # You can add other groups here later (frontend, sandbox, etc.),
-    # just make sure they include all 11 fields defined above!
+      # Ruleset Configuration Values
+      required_reviewers         = 2    # 2 Approvals required
+      dismiss_stale_reviews      = true # New pushes invalidate old approvals
+      require_code_owner_reviews = true # Enforce code owners compliance
+
+      release_branch_pattern = "release/*"       # Targets main AND release/* branches
+      bypass_actors_teams    = ["devops-admins"] # Only members of this team bypass deletion blocks
+    }
   }
 }
